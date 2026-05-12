@@ -1,0 +1,121 @@
+[
+  {
+    "id": "1",
+    "title": "Nee Gunde Lona",
+    "artist": "Sai Abhayankar",
+    "album": "Starters Pack",
+    "genre": "Dude",
+    "cover": "assets/Dude.png",
+    "src": "assets/songs/Nee Gunde Lona.mp3"
+  },
+  {
+    "id": "2",
+    "title": "Boom Boom",
+    "artist": "Deepthi Suresh, Sai Abhyankkar",
+    "album": "Starters Pack",
+    "genre": "Dude",
+    "duration": 187,
+    "cover": "assets/Dude.png",
+    "src": "assets/songs/Boom Boom.mp3"
+  },
+  {
+    "id": "3",
+    "title": "Singari",
+    "artist": "Sai Abhyankkar",
+    "album": "Starters Pack",
+    "genre": "Dude",
+    "duration": 234,
+    "cover": "assets/Dude.png",
+    "src": "assets/songs/Singari.mp3"
+  },
+  {
+    "id": "4",
+    "title": "Adharaku",
+    "artist": "Viswa",
+    "album": "Starters Pack",
+    "genre": "Athadu",
+    "duration": 198,
+    "cover": "assets/Athadu.png",
+    "src": "assets/songs/Adharaku.mp3"
+  },
+  {
+    "id": "5",
+    "title": "Pillagali",
+    "artist": "Shreya Ghoshal",
+    "album": "Starters Pack",
+    "genre": "Athadu",
+    "duration": 265,
+    "cover": "assets/Athadu.png",
+    "src": "assets/songs/Pillagali.mp3"
+  },
+  {
+    "id": "6",
+    "title": "Avunu Nizam",
+    "artist": "K.K., Sunitha",
+    "album": "Starters Pack",
+    "genre": "Athadu",
+    "mood": "energetic",
+    "duration": 221,
+    "cover": "assets/Athadu.png",
+    "src": "assets/songs/Avunu Nizam.mp3"
+  },
+  {
+    "id": "7",
+    "title": "Darsanamey",
+    "artist": "Yazin Nizar",
+    "album": "Starters Pack",
+    "genre": "Nari Nari Nadumu Murari",
+    "duration": 210,
+    "cover": "assets/NNNM.png",
+    "src": "assets/songs/Darsanamey.mp3"
+  },
+  {
+    "id": "8",
+    "title": "Oka Maru",
+    "artist": "Harris Jayaraj, Karthik",
+    "album": "Starters Pack",
+    "genre": "Ghajini",
+    "duration": 240,
+    "cover": "assets/Ghajini.png",
+    "src": "assets/songs/Oka Maru.mp3"
+  },
+  {"id": "9",
+    "title": "Paro",
+    "artist": "Aditya Rikhari",
+    "album": "Starters Pack",
+    "genre": "Aditya Rikhari",
+    "duration": 240,
+    "cover": "assets/Aditya Rikhari.png",
+    "src": "assets/songs/Paro.mp3"
+  },
+  {
+    "id": "10",
+    "title": "Sahiba",
+    "artist": "Aditya Rikhari",
+    "album": "Starters Pack",
+    "genre": "Sahiba",
+    "duration": 240,
+    "cover": "assets/Sahiba.png",
+    "src": "assets/songs/Sahiba.mp3"
+  },
+  {
+    "id": "11",
+    "title": "Monica",
+    "artist": "Anirudh Ravichander",
+    "album": "Starters Pack",
+    "genre": "Coolie",
+    "duration": 240,
+    "cover": "assets/Coolie.png",
+    "src": "assets/songs/Monica.mp3"
+  },
+  {
+    "id":"12",
+    "title": "Hello ani",
+    "artist": "Anurag Kulkarni",
+    "album": "Starters Pack",
+    "genre": "Little Hearts",
+    "duration": 240,
+    "cover": "assets/little hearts.png",
+    "src": "assets/songs/Hello ani.mp3"
+  }
+]

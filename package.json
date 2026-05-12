@@ -1,0 +1,14 @@
+{
+  "name": "soundwave",
+  "version": "1.0.0",
+  "description": "SoundWave music streaming application",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node --watch backend/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}

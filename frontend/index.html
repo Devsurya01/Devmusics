@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="google-client-id" content=""/>
+  <title>Dev Music</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body data-theme="default">
+
+  <!-- ═══════════════ LOGIN PAGE ═══════════════ -->
+  <div id="page-login" class="page active">
+    <div class="auth-bg">
+      <div class="auth-card">
+        <div class="auth-logo">
+          <img src="/assets/logo.png" alt="Soundwave logo" onerror="this.style.display='none'" style="width: 150px; height: auto; margin-bottom: -10px;"/>
+        </div>
+        <h2>Welcome back</h2>
+        <p class="auth-sub">Sign in to your world of music</p>
+
+        <button class="btn-google" id="btn-google-login">
+          <i class="fab fa-google"></i> Continue with Google
+        </button>
+        <div class="divider"><span>or</span></div>
+
+        <div class="form-group">
+          <i class="fas fa-envelope"></i>
+          <input type="text" id="login-emailOrUsername" placeholder="Email or Username"/>
+        </div>
+        <div class="form-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="login-password" placeholder="Password"/>
+          <i class="fas fa-eye toggle-pw" id="toggle-login-pw"></i>
+        </div>
+        <p class="error-msg" id="login-error"></p>
+
+        <button class="btn-primary" id="btn-login">Login</button>
+        <button class="btn-ghost" id="btn-guest">Continue as Guest</button>
+
+        <p class="auth-link">New here? <span onclick="showPage('signup')">Register</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SIGNUP PAGE ═══════════════ -->
+  <div id="page-signup" class="page">
+    <div class="auth-bg">
+      <div class="auth-card">
+        <div class="auth-logo">
+          <img src="/assets/logo.png" alt="Soundwave logo" onerror="this.style.display='none'" style="width: 150px; height: auto; margin-bottom: -10px;"/>
+        </div>
+        <h2>Create account</h2>
+        <p class="auth-sub">Join and start vibing</p>
+
+        <div class="form-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="signup-email" placeholder="Email"/>
+        </div>
+        <div class="form-group">
+          <i class="fas fa-user"></i>
+          <input type="text" id="signup-username" placeholder="Username"/>
+        </div>
+        <div class="form-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="signup-password" placeholder="New Password"/>
+          <i class="fas fa-eye toggle-pw" id="toggle-signup-pw"></i>
+        </div>
+        <div class="form-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="signup-confirm" placeholder="Re-enter Password"/>
+        </div>
+        <p class="error-msg" id="signup-error"></p>
+
+        <button class="btn-primary" id="btn-signup">Sign Up</button>
+        <p class="auth-link">Already have an account? <span onclick="showPage('login')">Login</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ MAIN APP ═══════════════ -->
+  <div id="page-app" class="page">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <img src="/assets/logo.png" alt="Dev Music" class="sidebar-logo-img"/>
+      </div>
+      <div class="sidebar-equalizer">
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+      </div>
+      <nav class="bottom-nav">
+        <button class="nav-btn active" data-tab="home" onclick="switchTab('home')">
+          <i class="fas fa-home"></i><span>Home</span>
+        </button>
+        <button class="nav-btn" data-tab="library" onclick="switchTab('library')">
+          <i class="fas fa-book-open"></i><span>Library</span>
+        </button>
+        <button class="nav-btn settings" data-tab="settings" onclick="switchTab('settings')">
+          <i class="fas fa-cog"></i><span>Settings</span>
+        </button>
+      </nav>
+    </aside>
+
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="brand">Dev Music</span>
+      </div>
+      <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input type="text" id="search-input" placeholder="Search songs, artists..."/>
+      </div>
+      <div class="topbar-right">
+        <button class="icon-btn" id="btn-theme-picker" title="Change Theme">
+          <i class="fas fa-palette"></i>
+        </button>
+        <div class="profile-btn" id="profile-menu-btn">
+          <div class="avatar" id="avatar-text">U</div>
+        </div>
+        <div class="profile-dropdown hidden" id="profile-dropdown">
+          <p id="dropdown-username">Username</p>
+          <hr/>
+          <button class="logout-btn" type="button" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <!-- HOME TAB -->
+      <section id="tab-home" class="tab active">
+        <div class="section-header">
+          <h2>Discover</h2>
+          <p id="mood-radio-label" class="mood-label"></p>
+        </div>
+        <div class="song-grid" id="song-grid"></div>
+      </section>
+
+      <!-- LIBRARY TAB -->
+      <section id="tab-library" class="tab">
+        <div class="library-top">
+          <h2>Your Library</h2>
+          <button class="btn-small" id="btn-new-playlist">
+            <i class="fas fa-plus"></i> New Playlist
+          </button>
+        </div>
+
+        <!-- Library nav pills -->
+        <div class="lib-pills">
+          <button class="pill active" data-lib="liked" onclick="switchLib('liked')">
+            <i class="fas fa-heart"></i> Liked Songs
+          </button>
+          <button class="pill" data-lib="playlists" onclick="switchLib('playlists')">
+            <i class="fas fa-list"></i> Playlists
+          </button>
+        </div>
+
+        <!-- Liked Songs -->
+        <div id="lib-liked" class="lib-section active">
+          <div class="song-grid" id="liked-grid"></div>
+          <p class="empty-msg" id="liked-empty">No liked songs yet. Tap ♥ on any song!</p>
+        </div>
+
+        <!-- Playlists -->
+        <div id="lib-playlists" class="lib-section">
+          <div class="playlist-list" id="playlist-list"></div>
+          <div class="song-grid" id="playlist-songs-grid"></div>
+        </div>
+      </section>
+
+      <!-- SETTINGS TAB -->
+      <section id="tab-settings" class="tab">
+        <div class="settings-panel">
+          <div class="settings-header">
+            <div class="settings-profile-main">
+              <div class="settings-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="settings-identity">
+                <span class="settings-kicker">Account</span>
+                <h2 id="settings-hero-username">Guest</h2>
+                <p id="settings-hero-email">Not added</p>
+              </div>
+            </div>
+            <div class="settings-badge" id="settings-detail-type">Guest</div>
+          </div>
+          <div class="settings-body">
+            <div class="settings-account-details">
+              <div class="settings-detail">
+                <i class="fas fa-user"></i>
+                <span>Username</span>
+                <strong id="settings-detail-username">Guest</strong>
+              </div>
+              <div class="settings-detail">
+                <i class="fas fa-envelope"></i>
+                <span>Email</span>
+                <strong id="settings-detail-email">Not added</strong>
+              </div>
+              <div class="settings-detail">
+                <i class="fas fa-calendar-check"></i>
+                <span>Joined</span>
+                <strong id="settings-detail-joined">Today</strong>
+              </div>
+              <div class="settings-detail">
+                <i class="fas fa-heart"></i>
+                <span>Liked Songs</span>
+                <strong id="settings-detail-liked">0</strong>
+              </div>
+              <div class="settings-detail">
+                <i class="fas fa-list"></i>
+                <span>Playlists</span>
+                <strong id="settings-detail-playlists">0</strong>
+              </div>
+              <div class="settings-detail">
+                <i class="fas fa-image"></i>
+                <span>Photo</span>
+                <strong id="settings-detail-photo">Not set</strong>
+              </div>
+            </div>
+
+            <div class="settings-actions">
+              <div class="settings-row">
+                <h3>Profile name</h3>
+                <input type="text" id="settings-username" placeholder="Enter new username"/>
+              </div>
+              <div class="settings-button-grid">
+                <button class="btn-primary" id="btn-change-username" type="button">
+                  <i class="fas fa-check"></i> Update Name
+                </button>
+                <button class="btn-primary btn-alt" id="btn-change-photo" type="button">
+                  <i class="fas fa-camera"></i> Change Photo
+                </button>
+                <button class="btn-primary btn-alt btn-remove-photo" id="btn-remove-photo" type="button">
+                  <i class="fas fa-trash"></i> Remove Photo
+                </button>
+              </div>
+            </div>
+
+            <div class="settings-danger-zone">
+              <h3 style="color: #e53e3e; margin-bottom: 16px; font-weight: 700;">Danger Zone</h3>
+              <button class="btn-primary btn-alt" id="btn-delete-account" type="button" style="background: #dc2626; border-color: #991b1b; color: #ffffff;">
+                <i class="fas fa-user-slash"></i> Delete Account Permanently
+              </button>
+            </div>
+
+            <button class="btn-ghost logout-btn" type="button" onclick="logout()">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Player Bar -->
+    <div class="player-bar" id="player-bar">
+      <div class="player-info">
+        <img id="player-cover" src="" alt="cover"/>
+        <div class="player-info-meta">
+          <p id="player-title">—</p>
+          <p id="player-artist" class="muted">—</p>
+        </div>
+        <button class="icon-btn like-btn-player" id="player-like-btn">
+          <i class="fas fa-heart"></i>
+        </button>
+        <div class="player-lyrics" id="player-lyrics">
+          <span id="lyrics-text"></span>
+        </div>
+      </div>
+      <div class="player-controls">
+        <button class="icon-btn" id="btn-prev"><i class="fas fa-step-backward"></i></button>
+        <button class="icon-btn play-btn" id="btn-play"><i class="fas fa-play"></i></button>
+        <button class="icon-btn" id="btn-next"><i class="fas fa-step-forward"></i></button>
+        <button class="icon-btn" id="btn-shuffle"><i class="fas fa-random"></i></button>
+        <button class="icon-btn" id="btn-loop" title="Loop song"><i class="fas fa-repeat"></i></button>
+      </div>
+      <div class="player-progress">
+        <span id="time-cur">0:00</span>
+        <input type="range" id="progress-bar" value="0" min="0" max="100"/>
+        <span id="time-dur">0:00</span>
+        <i class="fas fa-volume-up"></i>
+        <input type="range" id="volume-bar" value="80" min="0" max="100"/>
+      </div>
+    </div>
+
+    <!-- Theme Picker Modal -->
+    <div class="modal-overlay hidden" id="theme-modal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Choose Your Vibe</h3>
+          <button class="icon-btn" onclick="closeThemeModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <p class="modal-sub">Themes change the entire app color — like Instagram chat themes</p>
+        <div class="theme-grid" id="theme-grid"></div>
+      </div>
+    </div>
+
+    <!-- New Playlist Modal -->
+    <div class="modal-overlay hidden" id="playlist-modal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>New Playlist</h3>
+          <button class="icon-btn" onclick="closePlaylistModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="form-group">
+          <i class="fas fa-music"></i>
+          <input type="text" id="new-playlist-name" placeholder="Playlist name"/>
+        </div>
+        <button class="btn-primary" id="btn-create-playlist">Create</button>
+      </div>
+    </div>
+
+    <!-- Add To Playlist Modal -->
+    <div class="modal-overlay hidden" id="add-playlist-modal">
+      <div class="modal-card add-playlist-card">
+        <div class="modal-header">
+          <h3>Add to playlist</h3>
+          <button class="icon-btn" onclick="closeAddToPlaylistModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="add-song-preview">
+          <img id="add-song-cover" src="" alt="song cover"/>
+          <div>
+            <p id="add-song-title">Song title</p>
+            <span id="add-song-artist">Artist</span>
+          </div>
+        </div>
+        <p class="modal-sub">Choose which playlist should get this song.</p>
+        <div class="playlist-choice-list" id="playlist-choice-list"></div>
+        <button class="btn-ghost" id="btn-create-playlist-from-add" type="button">
+          <i class="fas fa-plus"></i> Create New Playlist
+        </button>
+      </div>
+    </div>
+
+  </div><!-- end page-app -->
+
+  <input type="file" id="profile-file-input" accept="image/*" hidden />
+  <audio id="audio-el"></audio>
+
+  <script src="theme.js"></script>
+  <script src="auth.js"></script>
+  <script src="player.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
