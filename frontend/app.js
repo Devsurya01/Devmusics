@@ -4,12 +4,20 @@
    ══════════════════════════════════════════════ */
 
 const API = 'https://devmusics.onrender.com/api';
+const BACKEND_URL = 'https://devmusics.onrender.com';
 
 let allSongs = [];
 let currentUser = null;
 let activePlaylistId = null;
 let pendingPlaylistSongId = null;
 let isAppInitialized = false;
+
+/* ── Asset URL Helper ──────────────────────── */
+function getAssetUrl(path) {
+  if (!path) return '';
+  if (path.startsWith('http') || path.startsWith('data:')) return path;
+  return `${BACKEND_URL}${path.startsWith('/') ? '' : '/'}${path}`;
+}
 
 /* ── Ripple effect helper ───────────────────── */
 function addRipple(btn) {
@@ -182,7 +190,8 @@ function updateUserUI() {
 }
 
 function getCurrentProfileImage() {
-  return currentUser?.avatar || currentUser?.profileImage || currentUser?.photo || '';
+  const img = currentUser?.avatar || currentUser?.profileImage || currentUser?.photo || '';
+  return getAssetUrl(img);
 }
 
 function renderAvatar(el, src, fallbackText, fallbackHtml = '') {
@@ -525,7 +534,7 @@ function buildSongCard(song, opts = {}) {
       </button>
     </div>
     <div class="card-img-wrap">
-      <img src="${song.cover}" alt="${song.title}" loading="lazy"
+      <img src="${getAssetUrl(song.cover)}" alt="${song.title}" loading="lazy"
            onerror="this.src='https://picsum.photos/seed/${song.id}/200'"/>
       <div class="play-overlay"><i class="fas fa-play"></i></div>
     </div>
@@ -864,7 +873,7 @@ function renderPlaylistChoiceModal(songId) {
   const artist = document.getElementById('add-song-artist');
   if (!song || !list) return;
 
-  if (cover) cover.src = song.cover;
+  if (cover) cover.src = getAssetUrl(song.cover);
   if (title) title.textContent = song.title;
   if (artist) artist.textContent = song.artist;
 

@@ -13,6 +13,14 @@ let isPlaying = false;
 let isLoop = false;
 let currentLyrics = [];
 
+const BACKEND_URL = 'https://devmusics.onrender.com';
+
+function getAssetUrl(path) {
+  if (!path) return '';
+  if (path.startsWith('http') || path.startsWith('data:')) return path;
+  return `${BACKEND_URL}${path.startsWith('/') ? '' : '/'}${path}`;
+}
+
 /* ── Init player after DOM ready ────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   audioEl = document.getElementById('audio-el');
@@ -129,7 +137,7 @@ function playSong(song, queue = []) {
     document.getElementById('player-title').textContent = song.title;
     document.getElementById('player-artist').textContent = song.artist;
     const cover = document.getElementById('player-cover');
-    cover.src = song.cover || `https://picsum.photos/seed/${song.id}/200`;
+    cover.src = getAssetUrl(song.cover) || `https://picsum.photos/seed/${song.id}/200`;
     cover.onerror = () => cover.src = `https://picsum.photos/seed/${song.id}/200`;
 
     // Load Lyrics
@@ -137,7 +145,7 @@ function playSong(song, queue = []) {
     const lyricsEl = document.getElementById('lyrics-text');
     if (lyricsEl) lyricsEl.textContent = '';
 
-    fetch(`/assets/${song.id}.lrc`)
+    fetch(getAssetUrl(`/assets/${song.id}.lrc`))
       .then(r => r.ok ? r.text() : Promise.reject())
       .then(text => {
          currentLyrics = parseLRC(text);
@@ -147,7 +155,7 @@ function playSong(song, queue = []) {
       });
 
     // Update audio
-    audioEl.src = song.src || '';
+    audioEl.src = getAssetUrl(song.src) || '';
     audioEl.volume = (parseInt(document.getElementById('volume-bar').value) / 100);
     audioEl.play().then(() => {
       setPlayState(true);
