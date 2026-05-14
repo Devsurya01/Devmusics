@@ -462,7 +462,28 @@ function initLogin() {
           body: JSON.stringify({ emailOrUsername, password })
         });
         data = await r.json();
-        if (!r.ok) throw new Error(data.error || 'Login failed');
+      if (!r.ok) {
+        // Fallback: If Render disk wiped the DB, but user exists locally, restore them!
+        const localData = localLogin({ emailOrUsername, password });
+        if (!localData.error) {
+          try {
+            const regRes = await fetch(`${AUTH_API}/register`, {
+              method: 'POST', headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email: localData.user.email, username: localData.user.username, password })
+            });
+            const regData = await regRes.json();
+            if (regRes.ok && localData.user.likedSongs?.length > 0) {
+              await fetch(`${AUTH_API}/users/${regData.user.id}/like`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ likedSongs: localData.user.likedSongs })
+              });
+            }
+          } catch (err) {}
+          data = localData;
+        } else {
+          throw new Error(data.error || 'Login failed');
+        }
+      }
       } else {
         data = localLogin({ emailOrUsername, password });
         if (data.error) throw new Error(data.error);

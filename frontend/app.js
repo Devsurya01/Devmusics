@@ -643,8 +643,10 @@ async function toggleLike(songId, btnEl) {
       body: JSON.stringify({ songId, action: wasLiked ? 'unlike' : 'like', likedSongs: currentUser.likedSongs })
     });
     const data = await r.json();
-    currentUser.likedSongs = data.likedSongs;
-    persistCurrentUser();
+    if (r.ok && data.likedSongs) {
+      currentUser.likedSongs = data.likedSongs;
+      persistCurrentUser();
+    }
   } catch (e) {
     console.error('Like sync failed:', e);
   }
@@ -825,6 +827,7 @@ async function createPlaylist() {
         body: JSON.stringify({ name })
       });
       pl = await r.json();
+      if (!r.ok) throw new Error('Server rejected');
     } catch (_e) {
       pl = { id: `local_pl_${Date.now()}`, name, songs: [] };
     }

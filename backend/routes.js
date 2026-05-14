@@ -55,7 +55,7 @@ router.post('/login', (req, res) => {
   const users = readJSON('users.json');
   const q = emailOrUsername.toLowerCase().trim();
   const user = users.find(u =>
-    (u.email === q || u.username.toLowerCase() === q) && u.password === password
+    (u.email?.toLowerCase() === q || u.username?.toLowerCase() === q) && u.password === password
   );
 
   if (!user)
