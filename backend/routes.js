@@ -72,15 +72,22 @@ router.get('/songs', (req, res) => {
 
 // ── LIKE / UNLIKE ──────────────────────────────
 router.post('/users/:id/like', (req, res) => {
-  const { songId } = req.body;
+  const { songId, action, likedSongs } = req.body;
   const users = readJSON('users.json');
   const idx   = users.findIndex(u => u.id === req.params.id);
   if (idx === -1) return res.status(404).json({ error: 'User not found.' });
 
-  const liked = users[idx].likedSongs || [];
-  users[idx].likedSongs = liked.includes(songId)
-    ? liked.filter(id => id !== songId)
-    : [...liked, songId];
+  if (likedSongs && Array.isArray(likedSongs)) {
+    // Exact array provided by client prevents async toggle bugs
+    users[idx].likedSongs = likedSongs;
+  } else {
+    const liked = users[idx].likedSongs || [];
+    if (action === 'like' && !liked.includes(songId)) {
+      users[idx].likedSongs.push(songId);
+    } else if (action === 'unlike') {
+      users[idx].likedSongs = liked.filter(id => id !== songId);
+    }
+  }
 
   writeJSON('users.json', users);
   res.json({ likedSongs: users[idx].likedSongs });

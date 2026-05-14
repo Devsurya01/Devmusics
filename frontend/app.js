@@ -53,36 +53,40 @@ function injectRippleCSS() {
       position: relative; overflow: hidden;
     }
     .btn-primary, .btn-ghost, .btn-google, .btn-small, .pill {
-      transition: transform 0.15s ease, opacity 0.15s ease,
-                  box-shadow 0.15s ease, background 0.15s ease !important;
+      transition: transform 0.1s ease, opacity 0.1s ease,
+                  box-shadow 0.1s ease, background 0.1s ease !important;
     }
     .btn-primary:active, .btn-small:active { transform: scale(0.97) !important; }
     .btn-ghost:active, .btn-google:active { transform: scale(0.97) !important; }
     .pill:active { transform: scale(0.95) !important; }
-    .icon-btn { transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease !important; }
+    .icon-btn { transition: transform 0.1s ease, background 0.1s ease, color 0.1s ease !important; }
     .icon-btn:active { transform: scale(0.88) !important; }
-    .nav-btn { transition: color 0.15s ease, background 0.15s ease !important; }
+    .nav-btn { transition: color 0.1s ease, background 0.1s ease !important; }
     .nav-btn:active { transform: scale(0.93) !important; }
     .song-card {
-      transition: transform 0.18s cubic-bezier(.4,0,.2,1),
-                  box-shadow 0.18s ease, background 0.15s ease !important;
+      transition: transform 0.15s cubic-bezier(.4,0,.2,1),
+                  box-shadow 0.15s ease, background 0.15s ease !important;
     }
     .song-card:active { transform: scale(0.97) translateY(-2px) !important; }
     .like-btn, .add-to-pl {
-      transition: transform 0.15s cubic-bezier(.4,0,.2,1),
-                  color 0.15s ease, background 0.15s ease !important;
+      transition: transform 0.1s cubic-bezier(.4,0,.2,1),
+                  color 0.1s ease, background 0.1s ease !important;
     }
     .like-btn:active { transform: scale(1.35) !important; }
-    .pl-item { transition: background 0.15s ease, transform 0.15s ease !important; }
+    .pl-item { transition: background 0.1s ease, transform 0.1s ease !important; }
     .pl-item:active { transform: scale(0.98) !important; }
-    .theme-item { transition: transform 0.15s ease, border-color 0.15s ease !important; }
+    .theme-item { transition: transform 0.1s ease, border-color 0.1s ease !important; }
     .theme-item:active { transform: scale(0.95) !important; }
     input[type=range] { cursor: pointer; }
     input[type=range]::-webkit-slider-thumb {
-      transition: transform 0.15s ease;
+      transition: transform 0.1s ease;
     }
     input[type=range]:active::-webkit-slider-thumb {
       transform: scale(1.3);
+    }
+    button, a, input[type=range] {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
     }
   `;
   document.head.appendChild(s);
@@ -101,7 +105,7 @@ function showPage(name) {
     pg.style.opacity = '0';
     pg.style.transform = 'translateY(15px)';
     requestAnimationFrame(() => {
-      pg.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+      pg.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
       pg.style.opacity = '1';
       pg.style.transform = 'translateY(0)';
     });
@@ -150,12 +154,10 @@ async function init() {
     showPage('login');
   }
 
-  // Bind all buttons with ripple
-  setTimeout(() => {
-    document.querySelectorAll(
-      '.btn-primary, .btn-ghost, .btn-google, .btn-small, .pill, .nav-btn, .play-btn, .icon-btn'
-    ).forEach(addRipple);
-  }, 300);
+  // Bind all buttons with ripple immediately
+  document.querySelectorAll(
+    '.btn-primary, .btn-ghost, .btn-google, .btn-small, .pill, .nav-btn, .play-btn, .icon-btn'
+  ).forEach(addRipple);
 }
 
 async function launchApp() {
@@ -628,12 +630,9 @@ async function toggleLike(songId, btnEl) {
   });
   updatePlayerLikeBtn(songId, !wasLiked);
 
-  if (!wasLiked) {
-    switchTab('library');
-    switchLib('liked');
-    renderLikedSongs();
-  } else if (document.getElementById('tab-library').classList.contains('active') &&
-             document.querySelector('.lib-pills .pill.active')?.dataset.lib === 'liked') {
+  // Instantly re-render liked songs grid if it is currently visible
+  if (document.getElementById('tab-library').classList.contains('active') &&
+      document.querySelector('.lib-pills .pill.active')?.dataset.lib === 'liked') {
     renderLikedSongs();
   }
 
@@ -641,7 +640,7 @@ async function toggleLike(songId, btnEl) {
     const r = await fetch(`${API}/users/${currentUser.id}/like`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ songId })
+      body: JSON.stringify({ songId, action: wasLiked ? 'unlike' : 'like', likedSongs: currentUser.likedSongs })
     });
     const data = await r.json();
     currentUser.likedSongs = data.likedSongs;

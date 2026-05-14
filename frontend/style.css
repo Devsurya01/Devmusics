@@ -476,7 +476,7 @@ body {
 .tab { display: none; }
 .tab.active { 
   display: block; 
-  animation: fadeInTab 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: fadeInTab 0.15s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 /* Section Headers */
@@ -909,7 +909,7 @@ body {
 .lib-section { display: none; }
 .lib-section.active { 
   display: block; 
-  animation: fadeInTab 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: fadeInTab 0.15s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 .empty-msg { color: var(--text2); text-align: center; padding: 40px; font-size: 14px; }
 
