@@ -13,14 +13,6 @@ let isPlaying = false;
 let isLoop = false;
 let currentLyrics = [];
 
-const BACKEND_URL = 'https://devmusics.onrender.com';
-
-function getAssetUrl(path) {
-  if (!path) return '';
-  if (path.startsWith('http') || path.startsWith('data:')) return path;
-  return `${BACKEND_URL}${path.startsWith('/') ? '' : '/'}${path}`;
-}
-
 /* ── Init player after DOM ready ────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   audioEl = document.getElementById('audio-el');
