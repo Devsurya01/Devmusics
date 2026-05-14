@@ -27,7 +27,7 @@
   --radius-sm: 10px;
   --shadow: 0 4px 24px rgba(124,58,237,0.10);
   --transition: 0.2s ease;
-  --bg-image: url("/assets/retro-music-concept-with-vinyl-camera-headphones.jpg");
+  --bg-image: url("https://devmusics.onrender.com/assets/retro-music-concept-with-vinyl-camera-headphones.jpg");
   --bg-blend: overlay;
 }
 
@@ -119,7 +119,7 @@
   --text: #ffffff; --text2: #b581cb; --border: rgba(255, 113, 206, 0.3);
   --card-hover: rgba(58, 35, 99, 0.95); --player-bg: #1f1235; --heart: #ff71ce;
   --panel-text: #ffffff; --panel-muted: #b581cb;
-  --bg-image: url("/assets/lofi.jpg");
+  --bg-image: url("https://devmusics.onrender.com/assets/lofi.jpg");
   --bg-blend: overlay;
 }
 [data-theme="cyberpunk"] {
@@ -128,7 +128,7 @@
   --text: #ffffff; --text2: #0ff0fc; --border: rgba(243, 129, 129, 0.4);
   --card-hover: rgba(38, 20, 71, 0.95); --player-bg: #000000; --heart: #f38181;
   --panel-text: #ffffff; --panel-muted: #0ff0fc;
-  --bg-image: url("/assets/cyberpunk.jpg");
+  --bg-image: url("https://devmusics.onrender.com/assets/cyberpunk.jpg");
   --bg-blend: normal;
 }
 [data-theme="galaxy"] {
@@ -137,7 +137,7 @@
   --text: #f8fafc; --text2: #cbd5e1; --border: rgba(139, 92, 246, 0.3);
   --card-hover: rgba(30, 41, 59, 0.95); --player-bg: #0f172a; --heart: #ec4899;
   --panel-text: #f8fafc; --panel-muted: #cbd5e1;
-  --bg-image: url("/assets/galaxy.jpg");
+  --bg-image: url("https://devmusics.onrender.com/assets/galaxy.jpg");
   --bg-blend: overlay;
 }
 
@@ -165,7 +165,7 @@ body {
 }
 #page-login .auth-bg,
 #page-signup .auth-bg {
-  background-image: url("../assets/view-tiny-music-box.jpg");
+  background-image: url("https://devmusics.onrender.com/assets/view-tiny-music-box.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
