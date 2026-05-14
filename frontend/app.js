@@ -3,7 +3,7 @@
    playlists, search, UI routing
    ══════════════════════════════════════════════ */
 
-const API = '/api';
+const API = 'https://devmusics.onrender.com/api';
 
 let allSongs = [];
 let currentUser = null;
@@ -486,7 +486,7 @@ function logout() {
 /* ── Songs ──────────────────────────────────── */
 async function loadSongs() {
   try {
-    const r = await fetch('/api/songs');
+    const r = await fetch(`${API}/songs`);
     allSongs = await r.json();
   } catch (e) {
     console.error('Could not load songs:', e);

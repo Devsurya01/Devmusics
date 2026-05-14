@@ -4,7 +4,7 @@
    works offline (localStorage) + with server
    ══════════════════════════════════════════════ */
 
-const AUTH_API = '/api';
+const AUTH_API = 'https://devmusics.onrender.com/api';
 let serverAvailable = false;
 let googleReady = false;
 

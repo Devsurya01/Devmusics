@@ -146,7 +146,7 @@ function applyTheme(themeId, animate = true) {
     if (typeof cacheUserProfile === 'function') cacheUserProfile(user);
     // Sync to server in background
     if (user.id && !user.isGuest && !user.id.startsWith('guest_') && !user.id.startsWith('local_')) {
-      fetch(`http://localhost:3000/api/users/${user.id}/theme`, {
+      fetch(`https://devmusics.onrender.com/api/users/${user.id}/theme`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ theme: theme.id })
