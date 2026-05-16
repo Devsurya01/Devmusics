@@ -1383,12 +1383,12 @@ body {
     height: auto; 
     flex-direction: row; 
     align-items: center;
-    justify-content: center;
-    padding: 8px 12px !important; 
+    justify-content: space-between;
+    padding: 16px 20px !important; 
     bottom: calc(64px + env(safe-area-inset-bottom, 0px)); 
-    border-radius: 16px 16px 0 0;
-    gap: 6px;
-    max-height: 72px; /* Smooth card collapse limit */
+    border-radius: 20px 20px 0 0;
+    gap: 4px;
+    max-height: 85px; /* Smooth card collapse limit */
     overflow: hidden;
     transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s cubic-bezier(0.4, 0, 0.2, 1), gap 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease, box-shadow 0.3s ease;
   }
@@ -1412,14 +1412,14 @@ body {
   }
   
   /* Set explicit order and compact sizing for closed state items */
-  .player-bar:not(.expanded) #player-cover { order: 1; width: 42px; height: 42px; border-radius: 10px; margin: 0; }
-  .player-bar:not(.expanded) #player-like-btn { order: 2; width: 32px; height: 32px; font-size: 14px; }
-  .player-bar:not(.expanded) #btn-shuffle { order: 3; width: 32px; height: 32px; font-size: 14px; }
-  .player-bar:not(.expanded) #btn-prev { order: 4; width: 32px; height: 32px; font-size: 14px; }
-  .player-bar:not(.expanded) #btn-play { order: 5; width: 40px !important; height: 40px !important; font-size: 15px !important; margin: 0; }
-  .player-bar:not(.expanded) #btn-next { order: 6; width: 32px; height: 32px; font-size: 14px; }
-  .player-bar:not(.expanded) #btn-loop { order: 7; width: 32px; height: 32px; font-size: 14px; }
-  .player-bar:not(.expanded) #btn-expand-player { order: 8; width: 32px; height: 32px; font-size: 14px; margin: 0; }
+  .player-bar:not(.expanded) #player-cover { order: 1; width: 48px; height: 48px; margin: 0; }
+  .player-bar:not(.expanded) #player-like-btn { order: 2; width: 36px; height: 36px; font-size: 16px; }
+  .player-bar:not(.expanded) #btn-shuffle { order: 3; width: 36px; height: 36px; font-size: 16px; }
+  .player-bar:not(.expanded) #btn-prev { order: 4; width: 36px; height: 36px; font-size: 16px; }
+  .player-bar:not(.expanded) #btn-play { order: 5; width: 46px !important; height: 46px !important; font-size: 18px !important; margin: 0; }
+  .player-bar:not(.expanded) #btn-next { order: 6; width: 36px; height: 36px; font-size: 16px; }
+  .player-bar:not(.expanded) #btn-loop { order: 7; width: 36px; height: 36px; font-size: 16px; }
+  .player-bar:not(.expanded) #btn-expand-player { order: 8; width: 36px; height: 36px; font-size: 18px; margin: 0; }
   .player-bar:not(.expanded) #btn-shuffle, 
   .player-bar:not(.expanded) #btn-loop { position: static; }
 

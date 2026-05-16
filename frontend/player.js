@@ -100,6 +100,7 @@ function injectPlayerCSS() {
       to   { transform: rotate(360deg); }
     }
     #player-cover.spinning {
+    border-radius: 50% !important;
       animation: coverSpin 8s linear infinite;
     }
     #player-cover:not(.spinning) { border-radius: var(--radius-sm); }
