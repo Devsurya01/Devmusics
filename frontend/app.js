@@ -978,7 +978,7 @@ function showToast(msg, duration = 2500) {
   toast.id = 'sw-toast';
   toast.textContent = msg;
   toast.style.cssText = `
-    position:fixed;bottom:170px;left:50%;transform:translateX(-50%) translateY(10px);
+    position:fixed;bottom:calc(170px + env(safe-area-inset-bottom, 0px));left:50%;transform:translateX(-50%) translateY(10px);
     background:var(--accent);color:var(--accent-text);
     padding:10px 22px;border-radius:999px;font-size:14px;font-weight:600;
     z-index:999;box-shadow:0 4px 20px rgba(0,0,0,0.18);

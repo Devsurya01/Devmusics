@@ -2,11 +2,61 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <meta name="google-client-id" content=""/>
   <title>Dev Music</title>
   <link rel="stylesheet" href="style.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    /* ═══════════════ RESPONSIVE & SAFE AREA INSETS ═══════════════ */
+    :root {
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+    }
+
+    body {
+      /* Ensure layout accounts for mobile notches and side safe areas */
+      padding-top: var(--safe-top) !important;
+      padding-left: var(--safe-left) !important;
+      padding-right: var(--safe-right) !important;
+    }
+
+    /* Push bottom player bar and mobile nav above the home/swipe indicator */
+    .player-bar {
+      padding-bottom: calc(16px + var(--safe-bottom)) !important;
+    }
+    .bottom-nav {
+      padding-bottom: calc(10px + var(--safe-bottom)) !important;
+    }
+    .sidebar {
+      padding-bottom: var(--safe-bottom) !important;
+    }
+
+    /* Prevent content from being hidden behind the bottom player */
+    .main-content {
+      padding-bottom: calc(140px + var(--safe-bottom)) !important;
+    }
+
+    /* Global responsiveness for song lists */
+    .song-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .song-grid {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 12px;
+      }
+      .modal-card {
+        max-height: calc(85vh - var(--safe-bottom) - var(--safe-top));
+        margin-bottom: var(--safe-bottom);
+      }
+    }
+  </style>
 </head>
 <body data-theme="default">
 
