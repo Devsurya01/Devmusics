@@ -613,11 +613,15 @@ function renderArtists() {
   
   const artistMap = {};
   allSongs.forEach(s => {
-    if (!artistMap[s.artist]) {
-      artistMap[s.artist] = { name: s.artist, image: s.cover };
+    const artistName = s.artist ? s.artist.trim() : 'Unknown';
+    const artistKey = artistName.toLowerCase();
+    if (!artistMap[artistKey]) {
+      const safeFileName = artistName.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '').toLowerCase();
+      artistMap[artistKey] = { name: artistName, image: `/assets/artists/${safeFileName}.jpg`, count: 0 };
     }
+    artistMap[artistKey].count += 1;
   });
-  const artists = Object.values(artistMap);
+  const artists = Object.values(artistMap).filter(artist => artist.count >= 2);
   
   container.innerHTML = '';
   
