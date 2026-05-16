@@ -12,6 +12,7 @@ let isShuffle = false;
 let isPlaying = false;
 let isLoop = false;
 let currentLyrics = [];
+let smoothAnimId;
 
 /* ── Init player after DOM ready ────────────── */
 document.addEventListener('DOMContentLoaded', () => {
@@ -186,6 +187,19 @@ function animatePlayerChange(callback) {
 }
 
 /* ── Play/Pause state ────────────────────────── */
+function smoothProgress() {
+  const progressBar = document.getElementById('progress-bar');
+  if (isPlaying && !isDragging && audioEl && audioEl.duration) {
+    const pct = (audioEl.currentTime / audioEl.duration) * 100;
+    progressBar.value = pct;
+    progressBar.style.setProperty('--prog', `${pct}%`);
+    document.getElementById('time-cur').textContent = formatTime(audioEl.currentTime);
+  }
+  if (isPlaying) {
+    smoothAnimId = requestAnimationFrame(smoothProgress);
+  }
+}
+
 function setPlayState(playing) {
   isPlaying = playing;
   const btn = document.getElementById('btn-play');
@@ -203,8 +217,11 @@ function setPlayState(playing) {
   if (playing) {
     cover.classList.add('spinning');
     if (currentSong) updatePlayingCards(currentSong.id);
+      cancelAnimationFrame(smoothAnimId);
+      smoothAnimId = requestAnimationFrame(smoothProgress);
   } else {
     cover.classList.remove('spinning');
+      cancelAnimationFrame(smoothAnimId);
   }
 }
 
@@ -278,6 +295,7 @@ function bindPlayerEvents() {
     progressBar.style.setProperty('--prog', `${pct}%`);
     if (audioEl.duration) {
       audioEl.currentTime = (pct / 100) * audioEl.duration;
+      document.getElementById('time-cur').textContent = formatTime(audioEl.currentTime);
     }
   });
   progressBar.addEventListener('change', () => isDragging = false);
@@ -295,10 +313,6 @@ function bindPlayerEvents() {
   // Time update
   audioEl.addEventListener('timeupdate', () => {
     if (!audioEl.duration || isDragging) return;
-    const pct = (audioEl.currentTime / audioEl.duration) * 100;
-    progressBar.value = pct;
-    progressBar.style.setProperty('--prog', `${pct}%`);
-    document.getElementById('time-cur').textContent = formatTime(audioEl.currentTime);
     document.getElementById('time-dur').textContent = formatTime(audioEl.duration);
 
     // Sync Lyrics
