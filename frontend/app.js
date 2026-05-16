@@ -458,6 +458,23 @@ function deleteAccountPermanently() {
 }
 
 function logout() {
+  // Ensure all current details (theme, profile, username, last song) are saved before logout
+  if (currentUser) {
+    try {
+      if (typeof persistCurrentUser === 'function') persistCurrentUser();
+      
+      const cache = JSON.parse(localStorage.getItem('sw_user_profiles') || '{}');
+      cache[currentUser.id] = currentUser;
+      localStorage.setItem('sw_user_profiles', JSON.stringify(cache));
+      
+      const users = JSON.parse(localStorage.getItem('sw_users_db') || '[]');
+      const idx = users.findIndex(u => u.id === currentUser.id);
+      if (idx >= 0) users[idx] = { ...users[idx], ...currentUser };
+      else users.push(currentUser);
+      localStorage.setItem('sw_users_db', JSON.stringify(users));
+    } catch(e) { console.error('Error saving user data before logout:', e); }
+  }
+
   const isGuest = currentUser ? currentUser.isGuest : false;
   localStorage.removeItem('sw_user');
   if (isGuest && typeof applyTheme === 'function') applyTheme('default', false);
@@ -538,6 +555,7 @@ function buildSongCard(song, opts = {}) {
     <div class="card-img-wrap">
       <img src="${getAssetUrl(song.cover)}" alt="${song.title}" loading="lazy"
            onerror="this.src='https://picsum.photos/seed/${song.id}/200'"/>
+      ${song.duration ? `<div class="song-duration-overlay">${song.duration}</div>` : ''}
       <div class="play-overlay"><i class="fas fa-play"></i></div>
     </div>
     <p class="s-title">${song.title}</p>

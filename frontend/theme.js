@@ -136,6 +136,10 @@ function applyTheme(themeId, animate = true) {
   body.setAttribute('data-theme', theme.id);
   activeTheme = theme.id;
 
+  if (typeof currentUser !== 'undefined' && currentUser) {
+    currentUser.theme = theme.id;
+  }
+
   // Save to localStorage
   const saved = localStorage.getItem('sw_user');
   if (saved) {

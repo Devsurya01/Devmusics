@@ -165,6 +165,12 @@ function playSong(song, queue = []) {
 
   // Update like button
   updatePlayerLikeBtn(song.id, currentUser?.likedSongs?.includes(song.id));
+
+  // Track last played song in the user profile
+  if (typeof currentUser !== 'undefined' && currentUser) {
+    currentUser.lastPlayedSong = song;
+    if (typeof persistCurrentUser === 'function') persistCurrentUser();
+  }
 }
 
 /* ── Animate cover + title crossfade ────────── */
