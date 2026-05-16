@@ -641,7 +641,8 @@ function renderArtists() {
     item.className = 'artist-profile' + (currentArtistFilter === artist.name ? ' active' : '');
     item.innerHTML = `
       <div class="artist-img">
-        <img src="${getAssetUrl(artist.image)}" alt="${artist.name}" loading="lazy"/>
+        <img src="${getAssetUrl(artist.image)}" alt="${artist.name}" loading="lazy" 
+             onerror="this.onerror=null; this.src=getAssetUrl('/assets/default-artist.jpg');" />
       </div>
       <p>${artist.name}</p>
     `;
@@ -650,7 +651,8 @@ function renderArtists() {
       renderArtists();
       const titleEl = document.getElementById('home-title');
       if (titleEl) titleEl.textContent = artist.name;
-      const filtered = allSongs.filter(s => s.artist === artist.name);
+      // Safely filters all songs regardless of capitalization
+      const filtered = allSongs.filter(s => s.artist && s.artist.trim().toLowerCase() === artist.name.toLowerCase());
       renderHome(filtered);
     });
     container.appendChild(item);
