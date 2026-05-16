@@ -117,5 +117,86 @@
     "duration": 240,
     "cover": "assets/little hearts.png",
     "src": "assets/songs/Hello Ani.mp3"
+  },
+  {
+    "id":"13",
+    "title": "Adhento Gaani Vunnapaatuga",
+    "artist":"Anirudh Ravichander",
+    "album": "Starters Pack",
+    "genre":"Jersey",
+    "duration": 240,
+    "cover": "assets/Jerssey.png",
+    "src": "assets/songs/Adhento Gaani Vunnapaatuga.mp3"
+
+  },
+  {
+    "id":"14",
+    "title": "Spirit Of Jersey",
+    "artist":"Anirudh Ravichander",
+    "album": "Starters Pack",
+    "genre":"Jersey",
+    "duration": 240,
+    "cover": "assets/Jerssey.png",
+    "src": "assets/songs/Spirit Of Jersey.mp3"
+  },
+  {
+    "id":"15",
+    "title": "Aarambhame Le",
+    "artist":"Anirudh Ravichander",
+    "album": "Starters Pack",
+    "genre":"Jersey",
+    "duration": 240,
+    "cover": "assets/Jerssey.png",
+    "src": "assets/songs/Aarambhame Le.mp3"
+  },
+  {
+    "id":"16",
+    "title": "Baitikochi Chuste",
+    "artist":"Anirudh Ravichander",
+    "album": "Starters Pack",
+    "genre":"Agnyaathavaasi",
+    "duration": 240,
+    "cover": "assets/Agnyaathavaasi.png", 
+    "src": "assets/songs/Baitikochi Chuste.mp3"
+  },
+  {
+    "id":"17",
+    "title": "Gaali Vaaluga",
+    "artist":"Anirudh Ravichander",
+    "album": "Starters Pack",
+    "genre":"Agnyaathavaasi",
+    "duration": 240,
+    "cover": "assets/Agnyaathavaasi.png", 
+    "src": "assets/songs/Gaali Vaaluga.mp3"
+  },
+  {
+    "id":"18",
+    "title": "Dhaga Dhagamaney",
+    "artist":"Anirudh Ravichander",
+    "album": "Starters Pack",
+    "genre":"Agnyaathavaasi",
+    "duration": 240,
+    "cover": "assets/Agnyaathavaasi.png", 
+    "src": "assets/songs/Dhaga Dhagamaney.mp3"
+  },
+  {
+    "id":"19",
+    "title": "Swagatham Krishna",
+    "artist":"Niranjana Ramanan",
+    "album": "Starters Pack",
+    "genre":"Agnyaathavaasi",
+    "duration": 240,
+    "cover": "assets/Agnyaathavaasi.png", 
+    "src": "assets/songs/Swagatham Krishna.mp3"
+  },
+  {
+    "id":"20",
+    "title": "Ab Yevaro Nee Baby",
+    "artist":"Arjun Chandy, Nakash Aziz",
+    "album": "Starters Pack",
+    "genre":"Agnyaathavaasi",
+    "duration": 240,
+    "cover": "assets/Agnyaathavaasi.png", 
+    "src": "assets/songs/Ab Yevaro Nee Baby.mp3"
   }
 ]
