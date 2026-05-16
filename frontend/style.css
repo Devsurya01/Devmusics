@@ -899,6 +899,65 @@ body {
   pointer-events: none;
 }
 
+/* Artists Scroll */
+.artist-scroll-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 16px;
+  padding-bottom: 24px; /* Invisible line separation */
+  margin-bottom: 8px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.artist-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+.artist-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  min-width: 76px;
+  max-width: 76px;
+  transition: transform var(--transition);
+}
+.artist-profile:hover {
+  transform: translateY(-4px);
+}
+.artist-img {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--surface2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-size: 24px;
+  overflow: hidden;
+  border: 3px solid transparent;
+  transition: border-color var(--transition);
+}
+.artist-profile.active .artist-img {
+  border-color: var(--accent);
+}
+.artist-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.artist-profile p {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
 /* Library */
 .library-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
 .library-top h2 { font-size: 24px; font-weight: 800; }
@@ -1422,6 +1481,9 @@ body {
   .player-bar:not(.expanded) #btn-expand-player { order: 8; width: 36px; height: 36px; font-size: 18px; margin: 0; }
   .player-bar:not(.expanded) #btn-shuffle, 
   .player-bar:not(.expanded) #btn-loop { position: static; }
+
+  .artist-img { width: 60px; height: 60px; font-size: 20px; border-width: 2px; }
+  .artist-profile { min-width: 64px; max-width: 64px; }
 
   /* EXPANDED STATE overrides */
   .player-bar.expanded .player-info { 

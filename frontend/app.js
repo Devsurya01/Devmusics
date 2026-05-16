@@ -11,6 +11,7 @@ let currentUser = null;
 let activePlaylistId = null;
 let pendingPlaylistSongId = null;
 let isAppInitialized = false;
+let currentArtistFilter = null;
 
 /* ── Asset URL Helper ──────────────────────── */
 function getAssetUrl(path) {
@@ -180,6 +181,7 @@ async function launchApp() {
   if (typeof applyTheme === 'function') applyTheme(currentUser?.theme || 'default', false);
   updateUserUI();
   await loadSongs();
+  renderArtists();
   renderHome();
   if (!isAppInitialized) {
     initSearch();
@@ -497,6 +499,7 @@ function logout() {
   currentUser = null;
   allSongs = [];
   activePlaylistId = null;
+  currentArtistFilter = null;
 
   const loginPage = document.getElementById('page-login');
   const appPage = document.getElementById('page-app');
@@ -603,6 +606,57 @@ function buildSongCard(song, opts = {}) {
   return card;
 }
 
+/* ── Artists ────────────────────────────────── */
+function renderArtists() {
+  const container = document.getElementById('artist-scroll-container');
+  if (!container) return;
+  
+  const artistMap = {};
+  allSongs.forEach(s => {
+    if (!artistMap[s.artist]) {
+      artistMap[s.artist] = { name: s.artist, image: s.cover };
+    }
+  });
+  const artists = Object.values(artistMap);
+  
+  container.innerHTML = '';
+  
+  const allItem = document.createElement('div');
+  allItem.className = 'artist-profile' + (!currentArtistFilter ? ' active' : '');
+  allItem.innerHTML = `
+    <div class="artist-img"><i class="fas fa-users"></i></div>
+    <p>All</p>
+  `;
+  allItem.addEventListener('click', () => {
+    currentArtistFilter = null;
+    renderArtists();
+    const titleEl = document.getElementById('home-title');
+    if (titleEl) titleEl.textContent = 'Discover';
+    renderHome(allSongs);
+  });
+  container.appendChild(allItem);
+
+  artists.forEach(artist => {
+    const item = document.createElement('div');
+    item.className = 'artist-profile' + (currentArtistFilter === artist.name ? ' active' : '');
+    item.innerHTML = `
+      <div class="artist-img">
+        <img src="${getAssetUrl(artist.image)}" alt="${artist.name}" loading="lazy"/>
+      </div>
+      <p>${artist.name}</p>
+    `;
+    item.addEventListener('click', () => {
+      currentArtistFilter = artist.name;
+      renderArtists();
+      const titleEl = document.getElementById('home-title');
+      if (titleEl) titleEl.textContent = artist.name;
+      const filtered = allSongs.filter(s => s.artist === artist.name);
+      renderHome(filtered);
+    });
+    container.appendChild(item);
+  });
+}
+
 /* ── Home ───────────────────────────────────── */
 function renderHome(songs = allSongs) {
   const grid = document.getElementById('song-grid');
@@ -625,7 +679,14 @@ function initSearch() {
     clearTimeout(debounce);
     debounce = setTimeout(() => {
       const q = input.value.trim().toLowerCase();
-      if (!q) { renderHome(); return; }
+      if (!q) { 
+        currentArtistFilter = null;
+        renderArtists();
+        const titleEl = document.getElementById('home-title');
+        if (titleEl) titleEl.textContent = 'Discover';
+        renderHome(); 
+        return; 
+      }
       const filtered = allSongs.filter(s =>
         s.title.toLowerCase().includes(q) ||
         s.artist.toLowerCase().includes(q) ||
@@ -633,6 +694,10 @@ function initSearch() {
         (s.mood || '').toLowerCase().includes(q)
       );
       // Switch to home tab to show results
+      currentArtistFilter = null;
+      renderArtists();
+      const titleEl = document.getElementById('home-title');
+      if (titleEl) titleEl.textContent = 'Search Results';
       switchTab('home');
       renderHome(filtered);
     }, 250);
