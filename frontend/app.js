@@ -663,6 +663,17 @@ function renderArtists() {
 function renderHome(songs = allSongs) {
   const grid = document.getElementById('song-grid');
   grid.innerHTML = '';
+
+  const playAllBtn = document.getElementById('btn-play-all');
+  if (playAllBtn) {
+    if (currentArtistFilter && songs.length > 0) {
+      playAllBtn.classList.remove('hidden');
+      playAllBtn.onclick = () => playSong(songs[0], songs);
+    } else {
+      playAllBtn.classList.add('hidden');
+    }
+  }
+
   if (!songs.length) {
     grid.innerHTML = '<p class="empty-msg">No songs found.</p>';
     return;
