@@ -1381,23 +1381,52 @@ body {
   /* ═════ Redesigned Mobile Player Card ═════ */
   .player-bar { 
     height: auto; 
-    flex-direction: column; 
-    align-items: stretch;
+    flex-direction: row; 
+    align-items: center;
     justify-content: space-between;
-    padding: 12px 16px !important; 
+    padding: 8px 12px !important; 
     bottom: calc(64px + env(safe-area-inset-bottom, 0px)); 
-    border-radius: 20px 20px 0 0;
-    gap: 8px;
-    transition: padding 0.3s ease, gap 0.3s ease;
+    border-radius: 16px 16px 0 0;
+    gap: 0;
+    transition: padding 0.3s ease, border-radius 0.3s ease;
   }
   .player-bar.expanded {
-    padding: 20px 16px 24px !important;
+    flex-direction: column;
+    padding: 24px 16px 28px !important;
     gap: 16px;
+    border-radius: 28px 28px 0 0;
   }
-  .player-info { width: 100%; justify-content: flex-start; }
-  .player-info img { width: 44px; height: 44px; }
-  .player-info-meta { flex: 1; max-width: none; margin-right: auto; }
-  .player-info p { font-size: 13px; }
+
+  /* Use display: contents in closed state to reorder all 8 buttons perfectly */
+  .player-bar:not(.expanded) .player-info,
+  .player-bar:not(.expanded) .player-controls {
+    display: contents;
+  }
+  .player-bar:not(.expanded) .player-info-meta,
+  .player-bar:not(.expanded) .player-lyrics,
+  .player-bar:not(.expanded) .player-progress {
+    display: none !important;
+  }
+  
+  /* Set explicit order and compact sizing for closed state items */
+  .player-bar:not(.expanded) #player-cover { order: 1; width: 42px; height: 42px; border-radius: 10px; margin-right: 4px; }
+  .player-bar:not(.expanded) #player-like-btn { order: 2; width: 32px; height: 32px; font-size: 14px; }
+  .player-bar:not(.expanded) #btn-shuffle { order: 3; width: 32px; height: 32px; font-size: 14px; }
+  .player-bar:not(.expanded) #btn-prev { order: 4; width: 32px; height: 32px; font-size: 14px; }
+  .player-bar:not(.expanded) #btn-play { order: 5; width: 40px !important; height: 40px !important; font-size: 15px !important; margin: 0 2px; }
+  .player-bar:not(.expanded) #btn-next { order: 6; width: 32px; height: 32px; font-size: 14px; }
+  .player-bar:not(.expanded) #btn-loop { order: 7; width: 32px; height: 32px; font-size: 14px; }
+  .player-bar:not(.expanded) #btn-expand-player { order: 8; width: 32px; height: 32px; font-size: 14px; margin-left: 4px; }
+  .player-bar:not(.expanded) #btn-shuffle, 
+  .player-bar:not(.expanded) #btn-loop { position: static; }
+
+  /* EXPANDED STATE overrides */
+  .player-bar.expanded .player-info { 
+    display: flex; width: 100%; justify-content: flex-start; align-items: center; gap: 12px;
+  }
+  .player-bar.expanded .player-info img { width: 56px; height: 56px; border-radius: 12px; }
+  .player-bar.expanded .player-info-meta { display: block; flex: 1; max-width: none; margin-right: auto; }
+  .player-bar.expanded .player-info p { font-size: 14px; }
   
   .expand-btn-player { display: flex !important; }
   .expand-btn-player i { transition: transform 0.3s ease; }
@@ -1425,19 +1454,21 @@ body {
   /* Hide volume controls on mobile to maximize timeline width */
   .player-progress i, .player-progress #volume-bar { display: none !important; }
   
-  .player-controls { 
+  .player-bar.expanded .player-controls { 
+    display: flex;
     width: 100%; 
     justify-content: center; 
     position: relative;
     background: transparent; 
     border: none; 
     padding: 0; 
-    gap: 12px; 
+    gap: 16px; 
     margin-top: 4px;
   }
-  .play-btn { width: 48px !important; height: 48px !important; font-size: 16px !important; }
-  #btn-shuffle { position: absolute; right: 38px; }
-  #btn-loop { position: absolute; right: 0; }
+  .player-bar.expanded .play-btn { width: 56px !important; height: 56px !important; font-size: 20px !important; }
+  .player-bar.expanded #btn-prev, .player-bar.expanded #btn-next { width: 40px; height: 40px; font-size: 18px; }
+  .player-bar.expanded #btn-shuffle { position: absolute; left: 0; width: 40px; height: 40px; font-size: 16px; }
+  .player-bar.expanded #btn-loop { position: absolute; right: 0; width: 40px; height: 40px; font-size: 16px; }
 
   .sidebar {
     display: flex;

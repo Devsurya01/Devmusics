@@ -12,7 +12,6 @@ let isShuffle = false;
 let isPlaying = false;
 let isLoop = false;
 let currentLyrics = [];
-let smoothAnimId;
 
 /* ── Init player after DOM ready ────────────── */
 document.addEventListener('DOMContentLoaded', () => {
@@ -187,19 +186,6 @@ function animatePlayerChange(callback) {
 }
 
 /* ── Play/Pause state ────────────────────────── */
-function smoothProgress() {
-  const progressBar = document.getElementById('progress-bar');
-  if (isPlaying && !isDragging && audioEl && audioEl.duration) {
-    const pct = (audioEl.currentTime / audioEl.duration) * 100;
-    progressBar.value = pct;
-    progressBar.style.setProperty('--prog', `${pct}%`);
-    document.getElementById('time-cur').textContent = formatTime(audioEl.currentTime);
-  }
-  if (isPlaying) {
-    smoothAnimId = requestAnimationFrame(smoothProgress);
-  }
-}
-
 function setPlayState(playing) {
   isPlaying = playing;
   const btn = document.getElementById('btn-play');
@@ -217,11 +203,8 @@ function setPlayState(playing) {
   if (playing) {
     cover.classList.add('spinning');
     if (currentSong) updatePlayingCards(currentSong.id);
-      cancelAnimationFrame(smoothAnimId);
-      smoothAnimId = requestAnimationFrame(smoothProgress);
   } else {
     cover.classList.remove('spinning');
-      cancelAnimationFrame(smoothAnimId);
   }
 }
 
@@ -303,18 +286,26 @@ function bindPlayerEvents() {
     const pct = progressBar.value;
     progressBar.style.setProperty('--prog', `${pct}%`);
     if (audioEl.duration) {
-      audioEl.currentTime = (pct / 100) * audioEl.duration;
-      document.getElementById('time-cur').textContent = formatTime(audioEl.currentTime);
+      const previewTime = (pct / 100) * audioEl.duration;
+      document.getElementById('time-cur').textContent = formatTime(previewTime);
     }
   });
   
-  // Robust release listeners to prevent timeline from freezing
-  const stopDragging = () => { if (isDragging) isDragging = false; };
-  progressBar.addEventListener('change', stopDragging);
-  progressBar.addEventListener('touchend', stopDragging);
-  progressBar.addEventListener('mouseup', stopDragging);
-  document.addEventListener('mouseup', stopDragging);
-  document.addEventListener('touchend', stopDragging);
+  const applyProgress = () => {
+    if (isDragging) {
+      const pct = progressBar.value;
+      if (audioEl.duration) {
+        audioEl.currentTime = (pct / 100) * audioEl.duration;
+      }
+      isDragging = false;
+    }
+  };
+
+  progressBar.addEventListener('change', applyProgress);
+  progressBar.addEventListener('touchend', applyProgress);
+  progressBar.addEventListener('mouseup', applyProgress);
+  document.addEventListener('mouseup', () => { if (isDragging) applyProgress(); });
+  document.addEventListener('touchend', () => { if (isDragging) applyProgress(); });
 
   // Volume
   volumeBar.value = 80;
@@ -329,6 +320,12 @@ function bindPlayerEvents() {
   audioEl.addEventListener('timeupdate', () => {
     if (!audioEl.duration || isDragging) return;
     document.getElementById('time-dur').textContent = formatTime(audioEl.duration);
+
+    // Ensure timeline progresses natively with the song
+    const pct = (audioEl.currentTime / audioEl.duration) * 100;
+    progressBar.value = pct;
+    progressBar.style.setProperty('--prog', `${pct}%`);
+    document.getElementById('time-cur').textContent = formatTime(audioEl.currentTime);
 
     // Sync Lyrics
     if (currentLyrics.length) {
