@@ -1367,19 +1367,56 @@ body {
   .brand { font-size: 18px; }
   .search-bar { max-width: 200px; }
   .search-bar input { font-size: 14px; padding: 8px 12px; }
-  .main-content { padding: 15px; padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)); }
+  .main-content { padding: 15px; padding-bottom: calc(230px + env(safe-area-inset-bottom, 0px)) !important; }
   .section-header { margin-bottom: 15px; }
   .section-header h2 { font-size: 20px; }
   .song-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .song-card { padding: 8px; }
   .song-card .s-title { font-size: 13px; }
   .song-card .s-artist { font-size: 11px; }
-  .player-bar { height: 60px; padding: 0 10px; bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
-  .player-info img { width: 36px; height: 36px; }
-  .player-info p { font-size: 12px; }
-  .player-controls { gap: 8px; }
-  .play-btn { width: 36px !important; height: 36px !important; font-size: 14px !important; }
-  .player-progress { display: none; }
+  
+  /* ═════ Redesigned Mobile Player Card ═════ */
+  .player-bar { 
+    height: auto; 
+    flex-direction: column; 
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 16px !important; 
+    bottom: calc(64px + env(safe-area-inset-bottom, 0px)); 
+    border-radius: 20px 20px 0 0;
+    gap: 12px;
+  }
+  .player-info { width: 100%; justify-content: flex-start; }
+  .player-info img { width: 44px; height: 44px; }
+  .player-info-meta { flex: 1; max-width: none; margin-right: auto; }
+  .player-info p { font-size: 13px; }
+  
+  .player-progress { 
+    display: flex; 
+    width: 100%; 
+    max-width: 100%; 
+    background: transparent; 
+    border: none; 
+    padding: 0; 
+    gap: 10px; 
+  }
+  /* Hide volume controls on mobile to maximize timeline width */
+  .player-progress i, .player-progress #volume-bar { display: none !important; }
+  
+  .player-controls { 
+    width: 100%; 
+    justify-content: center; 
+    position: relative;
+    background: transparent; 
+    border: none; 
+    padding: 0; 
+    gap: 12px; 
+    margin-top: 4px;
+  }
+  .play-btn { width: 48px !important; height: 48px !important; font-size: 16px !important; }
+  #btn-shuffle { position: absolute; right: 38px; }
+  #btn-loop { position: absolute; right: 0; }
+
   .sidebar {
     display: flex;
     position: fixed;
