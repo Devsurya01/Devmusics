@@ -119,10 +119,25 @@ function switchTab(tab) {
   document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
 
   const mainContent = document.querySelector('.main-content');
-  if (mainContent) mainContent.scrollTo({ top: 0, behavior: 'smooth' });
 
   if (tab === 'library') renderLibrary();
   if (tab === 'settings') updateSettingsDetails();
+
+  if (mainContent) {
+    if (tab === 'home') {
+      // Wait for the tab to display properly before calculating the scroll position
+      requestAnimationFrame(() => {
+        const playingCard = document.querySelector('#tab-home .song-card.playing');
+        if (playingCard) {
+          playingCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          mainContent.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+    } else {
+      mainContent.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
 }
 
 function switchLib(lib) {
