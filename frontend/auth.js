@@ -46,15 +46,7 @@ function cacheUserProfile(user) {
     const cache = JSON.parse(localStorage.getItem('sw_user_profiles') || '{}');
     cache[user.id] = {
       ...(cache[user.id] || {}),
-      username: user.username,
-      email: user.email,
-      avatar: user.avatar,
-      profileImage: user.profileImage,
-      theme: user.theme,
-      likedSongs: user.likedSongs,
-      playlists: user.playlists,
-      createdAt: user.createdAt,
-      googleId: user.googleId
+      ...user
     };
     localStorage.setItem('sw_user_profiles', JSON.stringify(cache));
   } catch (err) {
@@ -118,11 +110,7 @@ function syncUserToLocalDB(user) {
   if (idx !== -1) {
     users[idx] = {
       ...users[idx],
-      likedSongs: user.likedSongs,
-      playlists: user.playlists,
-      theme: user.theme,
-      avatar: user.avatar,
-      profileImage: user.profileImage
+      ...user
     };
     saveLocalUsers(users);
   }

@@ -1388,13 +1388,16 @@ body {
     bottom: calc(64px + env(safe-area-inset-bottom, 0px)); 
     border-radius: 16px 16px 0 0;
     gap: 0;
-    transition: padding 0.3s ease, border-radius 0.3s ease;
+    max-height: 72px; /* Smooth card collapse limit */
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s cubic-bezier(0.4, 0, 0.2, 1), gap 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease, box-shadow 0.3s ease;
   }
   .player-bar.expanded {
     flex-direction: column;
     padding: 24px 16px 28px !important;
     gap: 16px;
     border-radius: 28px 28px 0 0;
+    max-height: 400px; /* Smooth card expand limit */
   }
 
   /* Use display: contents in closed state to reorder all 8 buttons perfectly */
@@ -1444,7 +1447,7 @@ body {
     opacity: 0;
     overflow: hidden;
     margin: 0 !important;
-    transition: height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+    transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), margin 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .player-bar.expanded .player-progress {
     height: 30px;
