@@ -95,8 +95,8 @@
     "album": "Starters Pack",
     "genre": "Sahiba",
     "duration": 240,
-    "cover": "assets/Sahiba.png",
-    "src": "assets/songs/sahiba.mp3"
+    "cover": "assets/sahiba.png",
+    "src": "assets/songs/Sahiba.mp3"
   },
   {
     "id": "11",
