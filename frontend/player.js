@@ -235,6 +235,14 @@ function bindPlayerEvents() {
   const progressBar = document.getElementById('progress-bar');
   const volumeBar = document.getElementById('volume-bar');
   const likeBtn = document.getElementById('player-like-btn');
+  const expandBtn = document.getElementById('btn-expand-player');
+
+  // Expand/Collapse mobile player
+  if (expandBtn) {
+    expandBtn.addEventListener('click', () => {
+      document.getElementById('player-bar').classList.toggle('expanded');
+    });
+  }
 
   // Play / Pause
   playBtn.addEventListener('click', () => {
@@ -291,6 +299,7 @@ function bindPlayerEvents() {
   progressBar.addEventListener('mousedown', () => isDragging = true);
   progressBar.addEventListener('touchstart', () => isDragging = true, { passive: true });
   progressBar.addEventListener('input', () => {
+    isDragging = true; // Ensure dragging holds true while moving
     const pct = progressBar.value;
     progressBar.style.setProperty('--prog', `${pct}%`);
     if (audioEl.duration) {
@@ -298,8 +307,14 @@ function bindPlayerEvents() {
       document.getElementById('time-cur').textContent = formatTime(audioEl.currentTime);
     }
   });
-  progressBar.addEventListener('change', () => isDragging = false);
-  progressBar.addEventListener('touchend', () => isDragging = false);
+  
+  // Robust release listeners to prevent timeline from freezing
+  const stopDragging = () => { if (isDragging) isDragging = false; };
+  progressBar.addEventListener('change', stopDragging);
+  progressBar.addEventListener('touchend', stopDragging);
+  progressBar.addEventListener('mouseup', stopDragging);
+  document.addEventListener('mouseup', stopDragging);
+  document.addEventListener('touchend', stopDragging);
 
   // Volume
   volumeBar.value = 80;
